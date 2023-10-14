@@ -162,10 +162,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         git clone ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_SOURCE_BRANCH }} android-kernel --depth=1
-        git clone https://github.com/oppo-source/android_kernel_modules_oppo_mtk_4.19
-        mv android_kernel_modules_oppo_mtk_4.19/* ./
-        cp -r vendor /$GITHUB_WORKSPACE/kernel_workspace/android-kernel/
-        cp -r /$GITHUB_WORKSPACE/kernel_workspace/android-kernel/vendor/oplus/kernel_4.19/audio/ /$GITHUB_WORKSPACE/kernel_workspace/android-kernel/sound/soc/codecs/
+        
 
     - name: Download source boot image
       if: env.BUILD_BOOT_IMG == 'true'
