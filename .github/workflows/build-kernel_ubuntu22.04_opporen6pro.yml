@@ -1,4 +1,4 @@
-一name: Build kernel on opporeno6pro
+name: Build kernel on opporeno6pro
 on:
   watch:
     types: [started]
