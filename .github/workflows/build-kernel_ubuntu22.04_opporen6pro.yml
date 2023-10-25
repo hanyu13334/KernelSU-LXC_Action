@@ -162,10 +162,7 @@ jobs:
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace
         git clone ${{ env.KERNEL_SOURCE }} -b ${{ env.KERNEL_SOURCE_BRANCH }} android-kernel --depth=1
-        git clone https://github.com/oppo-source/android_kernel_modules_oppo_mtk_4.19
-        mv android_kernel_modules_oppo_mtk_4.19/* ./
-        cp -r vendor /$GITHUB_WORKSPACE/kernel_workspace/android-kernel/
-        cp -r /$GITHUB_WORKSPACE/kernel_workspace/android-kernel/vendor/oplus/kernel_4.19/audio/ /$GITHUB_WORKSPACE/kernel_workspace/android-kernel/sound/soc/codecs/
+        
 
     - name: Download source boot image
       if: env.BUILD_BOOT_IMG == 'true'
@@ -216,18 +213,10 @@ jobs:
          echo "CONFIG_VHOST_CROSS_ENDIAN_LEGACY=y" >> android-kernel/arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         
     - name: Setup LXC
-      if: env.ENABLE_LXC == 'true'
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         rm -rf utils
         git clone https://github.com/tomxi1997/lxc-docker-support-for-android.git utils
-        echo 'source "utils/Kconfig"' >> "Kconfig"
-
-        echo "CONFIG_DOCKER=y" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-        #echo "# CONFIG_ANDROID_PARANOID_NETWORK is not set" >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-          
-        #sed -i '/CONFIG_LOCALVERSION/d' arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
-        #echo 'CONFIG_LOCALVERSION="-LXC-KernelSU-support_Pdx"' >> arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
           
         chmod +x $GITHUB_WORKSPACE/kernel_workspace/android-kernel/utils/runcpatch.sh
         sh $GITHUB_WORKSPACE/kernel_workspace/android-kernel/utils/runcpatch.sh $GITHUB_WORKSPACE/kernel_workspace/android-kernel/kernel/cgroup/cgroup.c
