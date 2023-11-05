@@ -213,6 +213,7 @@ jobs:
          echo "CONFIG_VHOST_CROSS_ENDIAN_LEGACY=y" >> android-kernel/arch/${{ env.ARCH }}/configs/${{ env.KERNEL_CONFIG }}
         
     - name: Setup LXC
+    if: env.ENABLE_LXC == 'true'
       run: |
         cd $GITHUB_WORKSPACE/kernel_workspace/android-kernel
         rm -rf utils
